@@ -10,6 +10,12 @@ namespace I4DAB_HandIn3
     {
         static void Main(string[] args)
         {
+            DatabaseUtil db = new DatabaseUtil();
+
+            db.Setup();
+
+            Console.WriteLine("There are {0} persons in db", db.GetNumberOfRecords());
+            Console.WriteLine("{0}", db.GetPersons());
         }
     }
 }
