@@ -42,9 +42,10 @@ namespace DatabaseAccessLibrary
             return count;
         }
 
-        public void GetPersons()
+        public List<PersonModel> GetPersons()
         {
             SqlDataReader rdr = null;
+            List<PersonModel> list = new List<PersonModel>();
 
             try
             {
@@ -52,14 +53,22 @@ namespace DatabaseAccessLibrary
                 conn.Open();
 
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand("select Fornavn, MellemNavn, Efternavn, Type, AdresseId from Person", conn);
+                SqlCommand cmd = new SqlCommand("select * from Person", conn);
 
                 // Send command
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
                 {
-                    Console.WriteLine(rdr[0] + "\t" + rdr[1] + "\t" + rdr[2] + "  \t|  " + rdr[3] + "  \t|  " + rdr[4]);
+                    var person = new PersonModel(
+                        Convert.ToInt32(rdr["PersonId"]), 
+                        rdr["Fornavn"].ToString(), 
+                        rdr["Mellemnavn"].ToString(),
+                        rdr["Efternavn"].ToString(), 
+                        rdr["Type"].ToString(),
+                        Convert.ToInt32(rdr["AdresseId"]));
+
+                    list.Add(person);
                 }
             }
             finally
@@ -72,6 +81,8 @@ namespace DatabaseAccessLibrary
                 if (conn != null)
                     conn.Close();
             }
+
+            return list;
         }
 
         public List<TelefonModel> GetTelefons(int personId, bool sortAsc)
