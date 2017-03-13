@@ -1,4 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace I4DAB_HandIn3
 {
@@ -9,7 +11,8 @@ namespace I4DAB_HandIn3
         public void Setup()
         {
             // Instantiate the connection
-            conn = new SqlConnection("Data Source=i4dab.ase.au.dk;Initial Catalog=F17I4DABH2Gr18;User ID=F17I4DABH2Gr18; Password=F17I4DABH2Gr18");
+            //conn = new SqlConnection("Data Source=i4dab.ase.au.dk;Initial Catalog=F17I4DABH2Gr18;User ID=F17I4DABH2Gr18; Password=F17I4DABH2Gr18");
+            conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HandIn2DAB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         public int GetNumberOfRecords()
@@ -36,28 +39,36 @@ namespace I4DAB_HandIn3
             return count;
         }
 
-        public string GetPersons()
+        public void GetPersons()
         {
-            string count = "-1";
-
+            SqlDataReader rdr = null;
+           
             try
             {
                 // Open connection
                 conn.Open();
 
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand("select Fornavn from Person", conn);
+                SqlCommand cmd = new SqlCommand("select Fornavn, MellemNavn, Efternavn, Type, AdresseId from Person", conn);
 
                 // Send command
-                cmd.ExecuteScalar();
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Console.WriteLine(rdr[0] + "\t" + rdr[1] + "\t" + rdr[2] + "  \t|  " + rdr[3] + "  \t\t|  " + rdr[4]);
+                }
             }
             finally
             {
                 // Close connection
+                if (rdr != null)
+                    rdr.Close();
+
+
                 if (conn != null)
                     conn.Close();
             }
-            return count;
         }
     }
 }
