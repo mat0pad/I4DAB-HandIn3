@@ -12,12 +12,11 @@ namespace I4DAB_HandIn3
         static void Main(string[] args)
         {
             DatabaseUtil db = new DatabaseUtil();
-
             db.Setup();
 
             Console.WriteLine("There are {0} persons in db", db.GetNumberOfRecords());
 
-            var list = db.GetTelefons(7);
+            var list = db.GetTelefons(7, true);
 
             for (int i = 0; i < list.Count; i++)
             {

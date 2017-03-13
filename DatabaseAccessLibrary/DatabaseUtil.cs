@@ -74,7 +74,7 @@ namespace DatabaseAccessLibrary
             }
         }
 
-        public List<TelefonModel> GetTelefons(int PersonId)
+        public List<TelefonModel> GetTelefons(int personId, bool sortAsc)
         {
             SqlDataReader rdr = null;
             List<TelefonModel> list = new List<TelefonModel>();
@@ -83,10 +83,14 @@ namespace DatabaseAccessLibrary
                 // Open connection
                 conn.Open();
 
-                string cmdString = "select * from TelefonNr where (PersonId = #personId)";
+                string cmdString = "select * from TelefonNr where (PersonId = #personId) ORDER BY Nummer #sort";
+
+                cmdString = cmdString.Replace("#personId", personId.ToString());
+                cmdString = cmdString.Replace("#sort", (sortAsc ? "ASC" : "DSC"));
+
 
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", PersonId.ToString()), conn);
+                SqlCommand cmd = new SqlCommand(cmdString, conn);
 
                 // Send command
                 rdr = cmd.ExecuteReader();
@@ -116,7 +120,7 @@ namespace DatabaseAccessLibrary
             return list;
         }
 
-        public TelefonModel GetHomeTelefon(int PersonId)
+        public TelefonModel GetHomeTelefon(int personId)
         {
             SqlDataReader rdr = null;
             TelefonModel phone = null;
@@ -128,7 +132,7 @@ namespace DatabaseAccessLibrary
                 string cmdString = "select * from TelefonNr where (PersonId = #personId) AND (Type = 'Hjem')";
 
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", PersonId.ToString()), conn);
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
 
                 // Send command
                 rdr = cmd.ExecuteReader();
