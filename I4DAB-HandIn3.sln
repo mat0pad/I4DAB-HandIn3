@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I4DAB-HandIn3", "I4DAB-HandIn3\I4DAB-HandIn3.csproj", "{E96C01D4-94C0-4949-BDD9-CF3F85ABE2F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAccessLibrary", "DatabaseAccessLibrary\DatabaseAccessLibrary.csproj", "{24AC63CE-8846-4977-B363-B941A9B5E5F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E96C01D4-94C0-4949-BDD9-CF3F85ABE2F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E96C01D4-94C0-4949-BDD9-CF3F85ABE2F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E96C01D4-94C0-4949-BDD9-CF3F85ABE2F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AC63CE-8846-4977-B363-B941A9B5E5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AC63CE-8846-4977-B363-B941A9B5E5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AC63CE-8846-4977-B363-B941A9B5E5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AC63CE-8846-4977-B363-B941A9B5E5F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,8 +16,15 @@ namespace I4DAB_HandIn3
             db.Setup();
 
             Console.WriteLine("There are {0} persons in db", db.GetNumberOfRecords());
-            
-            db.GetPersons();
+
+            var list = db.GetTelefons(7);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine("Number is {0}",list[i].Nummer);
+
+            }
+
         }
     }
 }

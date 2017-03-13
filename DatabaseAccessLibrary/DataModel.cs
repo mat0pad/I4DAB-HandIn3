@@ -16,7 +16,7 @@ namespace DatabaseAccessLibrary
         public string Mellemnavn { get; set; }
         public string Type { get; set; }
 
-        PersonModel(int personId, string fornavn, string mellemnavn, string efternavn, string type, int adresseId)
+        public PersonModel(int personId, string fornavn, string mellemnavn, string efternavn, string type, int adresseId)
         {
             AdresseId = adresseId;
             PersonId = personId;
@@ -33,7 +33,7 @@ namespace DatabaseAccessLibrary
         public string Nummer { get; set; }
         public string Type { get; set; }
 
-        TelefonModel(int telefonId, string type, string nr, int personId)
+        public TelefonModel(int telefonId, string type, string nr, int personId)
         {
             TelefonId = telefonId;
             PersonnId = personId;
@@ -50,7 +50,7 @@ namespace DatabaseAccessLibrary
         public string Bynavn { get; set; }
         public string Type { get; set; }
 
-        AdresseModel(int adresseId, string vej, string by, int husnr, int postnr, string type)
+        public AdresseModel(int adresseId, string vej, string by, int husnr, int postnr, string type)
         {
             AdresseId = adresseId;
             Vejnavn = vej;
@@ -67,7 +67,7 @@ namespace DatabaseAccessLibrary
         public int PersonId { get; set; }
         public int AdresseId { get; set; }
 
-        HarAdresseModel(int personId, int adresseid)
+        public HarAdresseModel(int personId, int adresseid)
         {
             PersonId = personId;
             AdresseId = adresseid;
