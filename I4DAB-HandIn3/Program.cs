@@ -22,8 +22,9 @@ namespace I4DAB_HandIn3
             for (int i = 0; i < list.Count; i++)
             {
                 Console.WriteLine("Number is {0}",list[i].Nummer);
-
             }
+
+            Console.WriteLine("Home number is " + db.GetHomeTelefon(7).Nummer);
 
         }
     }

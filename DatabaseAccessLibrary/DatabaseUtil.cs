@@ -115,6 +115,48 @@ namespace DatabaseAccessLibrary
 
             return list;
         }
+
+        public TelefonModel GetHomeTelefon(int PersonId)
+        {
+            SqlDataReader rdr = null;
+            TelefonModel phone = null;
+            try
+            {
+                // Open connection
+                conn.Open();
+
+                string cmdString = "select * from TelefonNr where (PersonId = #personId) AND (Type = 'Hjem')";
+
+                // Instantiate a new command
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", PersonId.ToString()), conn);
+
+                // Send command
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    phone = new TelefonModel(
+                    Convert.ToInt32(rdr["TelefonId"]),
+                    rdr["Type"].ToString(),
+                    rdr["Nummer"].ToString(),
+                   Convert.ToInt32(rdr["PersonId"]));
+
+                    break;
+                }
+            }
+            finally
+            {
+                // Close connection
+                if (rdr != null)
+                    rdr.Close();
+
+
+                if (conn != null)
+                    conn.Close();
+            }
+
+            return phone;
+        }
     }
 }
 
