@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace I4DAB_HandIn3
+namespace DatabaseAccessLibrary
 {
     public class DatabaseUtil
     {
@@ -42,7 +45,7 @@ namespace I4DAB_HandIn3
         public void GetPersons()
         {
             SqlDataReader rdr = null;
-           
+
             try
             {
                 // Open connection
@@ -56,7 +59,7 @@ namespace I4DAB_HandIn3
 
                 while (rdr.Read())
                 {
-                    Console.WriteLine(rdr[0] + "\t" + rdr[1] + "\t" + rdr[2] + "  \t|  " + rdr[3] + "  \t\t|  " + rdr[4]);
+                    Console.WriteLine(rdr[0] + "\t" + rdr[1] + "\t" + rdr[2] + "  \t|  " + rdr[3] + "  \t|  " + rdr[4]);
                 }
             }
             finally
@@ -72,3 +75,4 @@ namespace I4DAB_HandIn3
         }
     }
 }
+
