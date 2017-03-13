@@ -74,7 +74,7 @@ namespace DatabaseAccessLibrary
             }
         }
 
-        public List<TelefonModel> GetTelefons(int PersonId)
+        public List<TelefonModel> GetTelefons(int personId)
         {
             SqlDataReader rdr = null;
             List<TelefonModel> list = new List<TelefonModel>();
@@ -86,7 +86,7 @@ namespace DatabaseAccessLibrary
                 string cmdString = "select * from TelefonNr where (PersonId = #personId)";
 
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", PersonId.ToString()), conn);
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
 
                 // Send command
                 rdr = cmd.ExecuteReader();
@@ -114,6 +114,45 @@ namespace DatabaseAccessLibrary
             }
 
             return list;
+        }
+
+
+
+        public PersonModel GetPerson(int personId)
+        {
+            SqlDataReader rdr = null;
+            PersonModel pm;
+
+            try
+            {
+                // Open connection
+                conn.Open();
+              
+                string cmdString = "select * from Person where (PersonId = #personId)";
+
+                // Instantiate a new command
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
+
+                // Send command
+                rdr = cmd.ExecuteReader();
+
+                rdr.Read();
+
+                pm = new PersonModel(personId, (string)rdr["Fornavn"], (string)rdr["Mellemnavn"], (string)rdr["Efternavn"], (string)rdr["Type"], (int)rdr["AdresseId"]);
+
+            }
+            finally
+            {
+                // Close connection
+                if (rdr != null)
+                    rdr.Close();
+
+
+                if (conn != null)
+                    conn.Close();
+            }
+
+            return pm;
         }
     }
 }
