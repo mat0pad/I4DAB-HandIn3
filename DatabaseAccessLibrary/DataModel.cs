@@ -50,7 +50,7 @@ namespace DatabaseAccessLibrary
         public string Bynavn { get; set; }
         public string Type { get; set; }
 
-        public AdresseModel(int adresseId, string vej, string by, int husnr, int postnr, string type)
+        public AdresseModel(int adresseId,string vej, int husnr, int postnr, string by, string type)
         {
             AdresseId = adresseId;
             Vejnavn = vej;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -114,6 +115,44 @@ namespace DatabaseAccessLibrary
             }
 
             return list;
+        }
+        
+        public List<AdresseModel> GetAdresses()
+        {
+            SqlDataReader sqlDataReader = null;
+            List<AdresseModel> list = null;
+            try
+            {
+              
+                SqlCommand cmd = new SqlCommand("select * from Adresse", conn);
+                conn.Open();
+                sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                {
+                    AdresseModel adresse = new AdresseModel(
+                        Convert.ToInt32(sqlDataReader["AdresseId"]),
+                        (int)sqlDataReader["husNummer"],
+               
+                        );
+                    int id = (int)sqlDataReader["AdresseId"];
+                    int HusNummer = (int) sqlDataReader["HusNummer"];
+                    int PostNummer = (int) sqlDataReader["PostNummer"];
+                    string Vejnavn = (string) sqlDataReader["Vejnavn"];
+                    string Bynavn = (string) sqlDataReader["Bynavn"];
+                    string Type = (string) sqlDataReader["Type"];
+
+                    list.Add(new AdresseModel(id,Vejnavn,Bynavn,HusNummer,PostNummer,Type));
+                }
+            }
+            finally
+            {
+                if(sqlDataReader != null)
+                    sqlDataReader.Close();
+                if(conn != null)
+                    conn.Close();
+            }
+            return list;
+
         }
     }
 }
