@@ -25,7 +25,14 @@ namespace DatabaseAccessLibrary
             Type = type;
             Efternavn = efternavn;
         }
-}
+
+        public override string ToString()
+        {
+            return "AdresseId: " + AdresseId + ". Efternavn: " + Efternavn + ". Fornavn: " + Fornavn + ". Mellemnavn: " + Mellemnavn + ". PersonId: " + PersonId + ". Type: " + Type;
+        }
+
+         
+    }
     public class TelefonModel
     {
         public int TelefonId { get; set; }
@@ -39,6 +46,11 @@ namespace DatabaseAccessLibrary
             PersonnId = personId;
             Nummer = nr;
             Type = type;
+        }
+
+        public override string ToString()
+        {
+            return "TelefonId: " + TelefonId + ". Nummer: " + Nummer + ". Type: " + Type + ". PersonId: " + PersonnId;
         }
     }
     public class AdresseModel
@@ -77,13 +89,13 @@ namespace DatabaseAccessLibrary
     public class PersonJoin
     {
         private PersonModel person;
-        private AdresseModel adresse;
-        private TelefonModel telefon;
-        public PersonJoin(PersonModel p, AdresseModel a, TelefonModel t)
+        private List<AdresseModel> adresseList;
+        private List<TelefonModel> telefonList;
+        public PersonJoin(PersonModel p, List<AdresseModel> a, List<TelefonModel> t)
         {
             this.person = p;
-            this.telefon = t;
-            this.adresse = a;
+            this.telefonList = t;
+            this.adresseList = a;
         }
 
     }

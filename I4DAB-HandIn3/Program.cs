@@ -14,7 +14,7 @@ namespace I4DAB_HandIn3
             DatabaseUtil db = new DatabaseUtil();
             db.Setup();
 
-            Console.WriteLine("There are {0} persons in db", db.GetNumberOfRecords());
+            Console.WriteLine("There are {0} persons in db", db.GetNumberOfRecords(DatabaseUtil.TABLE.Person));
 
             var list = db.GetTelefons(7);
 
@@ -25,11 +25,18 @@ namespace I4DAB_HandIn3
 
             Console.WriteLine("Home number is " + db.GetHomeTelefon(7).Nummer);
 
-            PersonModel person = db.GetPerson(1);
-            Console.WriteLine("----------------------------------------");
-            Console.WriteLine("Person information for person with Id = 1:");
-            Console.WriteLine("AdresseId: " + person.AdresseId + ". Efternavn: " + person.Efternavn + ". Fornavn: " + person.Fornavn + ". Mellemnavn: " + person.Mellemnavn + ". PersonId: " + person.PersonId + ". Type: " + person.Type);
-            Console.WriteLine("----------------------------------------");
+
+            PersonModel person1 = db.GetPerson(1);
+           
+            Console.WriteLine(person1.ToString());
+
+            List<TelefonModel> person1PhonesList = db.GetTelefons(1);
+
+            foreach (var item in person1PhonesList)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            
         }
     }
 }

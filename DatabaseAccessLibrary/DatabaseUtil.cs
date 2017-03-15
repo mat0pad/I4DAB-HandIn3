@@ -14,11 +14,18 @@ namespace DatabaseAccessLibrary
         public void Setup()
         {
             // Instantiate the connection
-            //conn = new SqlConnection("Data Source=i4dab.ase.au.dk;Initial Catalog=F17I4DABH2Gr18;User ID=F17I4DABH2Gr18; Password=F17I4DABH2Gr18");
-            conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HandIn2DAB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            conn = new SqlConnection("Data Source=i4dab.ase.au.dk;Initial Catalog=F17I4DABH2Gr18;User ID=F17I4DABH2Gr18; Password=F17I4DABH2Gr18");
+            //conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HandIn2DAB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
-        public int GetNumberOfRecords()
+        public enum TABLE
+        {
+            Person,
+            Adresse,
+            TelefonNr
+        }
+
+        public int GetNumberOfRecords(TABLE t)
         {
             int count = -1;
 
@@ -28,7 +35,7 @@ namespace DatabaseAccessLibrary
                 conn.Open();
 
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand("select count(*) from Person", conn);
+                SqlCommand cmd = new SqlCommand("select count(*) from " + (t == TABLE.Person ? "Person" : (t == TABLE.Adresse ? "Adresse" : "TelefonNr")), conn);
 
                 // Send command
                 count = (int)cmd.ExecuteScalar();
@@ -41,24 +48,36 @@ namespace DatabaseAccessLibrary
             return count;
         }
 
-        public void GetPersons()
+        public List<PersonModel> GetPersons(bool sortAsc = true)
         {
             SqlDataReader rdr = null;
+            List<PersonModel> list = new List<PersonModel>();
 
             try
             {
                 // Open connection
                 conn.Open();
 
+                string cmdString = "select Fornavn, MellemNavn, Efternavn, Type, AdresseId from Person ORDER BY Nummer #sort";
+               
                 // Instantiate a new command
-                SqlCommand cmd = new SqlCommand("select Fornavn, MellemNavn, Efternavn, Type, AdresseId from Person", conn);
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#sort", (sortAsc ? "ASC" : "DSC")), conn);
 
                 // Send command
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
                 {
-                    Console.WriteLine(rdr[0] + "\t" + rdr[1] + "\t" + rdr[2] + "  \t|  " + rdr[3] + "  \t|  " + rdr[4]);
+                    var person = new PersonModel(
+                        Convert.ToInt32(rdr["PersonId"]),
+                        rdr["Fornavn"].ToString(),
+                        rdr["Mellemnavn"].ToString(),
+                        rdr["Efternavn"].ToString(),
+                        rdr["Type"].ToString(),
+                        Convert.ToInt32(rdr["AdresseId"])
+                    );
+                    
+                    list.Add(person);
                 }
             }
             finally
@@ -67,6 +86,8 @@ namespace DatabaseAccessLibrary
                     rdr?.Close();
                     conn?.Close();
             }
+
+            return list;
         }
 
         public List<TelefonModel> GetTelefons(int personId)
@@ -107,7 +128,6 @@ namespace DatabaseAccessLibrary
             return list;
         }
 
-
         public TelefonModel GetHomeTelefon(int personId)
         {
             SqlDataReader rdr = null;
@@ -141,8 +161,6 @@ namespace DatabaseAccessLibrary
 
             return phone;
         }
-
-
 
         public PersonModel GetPerson(int personId)
         {
