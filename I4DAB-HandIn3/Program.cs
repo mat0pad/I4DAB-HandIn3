@@ -30,6 +30,18 @@ namespace I4DAB_HandIn3
             Console.WriteLine("Person information for person with Id = 1:");
             Console.WriteLine("AdresseId: " + person.AdresseId + ". Efternavn: " + person.Efternavn + ". Fornavn: " + person.Fornavn + ". Mellemnavn: " + person.Mellemnavn + ". PersonId: " + person.PersonId + ". Type: " + person.Type);
             Console.WriteLine("----------------------------------------");
+
+
+            
+            var listad = db.GetAdresses();
+
+            
+            
+            foreach (var item in listad)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            
         }
     }
 }

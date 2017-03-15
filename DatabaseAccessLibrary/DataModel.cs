@@ -60,6 +60,11 @@ namespace DatabaseAccessLibrary
             PostNummer = postnr;
         }
 
+        public override string ToString()
+        {
+            return "adresseId : " + AdresseId.ToString() + " Vej : " + Vejnavn + " husnr : " + HusNummer.ToString() + " postnr : " +
+                   PostNummer.ToString() + " by : " + Bynavn + " Type : " + Type;
+        }
     }
 
     public class HarAdresseModel
