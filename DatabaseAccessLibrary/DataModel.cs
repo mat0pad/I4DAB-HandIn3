@@ -98,16 +98,15 @@ namespace DatabaseAccessLibrary
 
     public class PersonJoin
     {
-        private PersonModel person;
-        private List<AdresseModel> adresseList;
-        private List<TelefonModel> telefonList;
+        public PersonModel person { get; set; }
+        public List<AdresseModel> adresseList { get; set; }
+        public List<TelefonModel> telefonList { get; set; }
         public PersonJoin(PersonModel p, List<AdresseModel> a, List<TelefonModel> t)
         {
             this.person = p;
             this.telefonList = t;
             this.adresseList = a;
         }
-
     }
 
     public class KartotekModel
