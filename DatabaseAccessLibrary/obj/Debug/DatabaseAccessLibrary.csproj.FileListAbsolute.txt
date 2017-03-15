@@ -3,3 +3,8 @@ C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAcc
 C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.csprojResolveAssemblyReference.cache
 C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.dll
 C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.pdb
+C:\Users\Henrik Nielsen\Dropbox\4. Semester\I4DAB1\I4DAB-HandIn3\DatabaseAccessLibrary\bin\Debug\DatabaseAccessLibrary.dll
+C:\Users\Henrik Nielsen\Dropbox\4. Semester\I4DAB1\I4DAB-HandIn3\DatabaseAccessLibrary\bin\Debug\DatabaseAccessLibrary.pdb
+C:\Users\Henrik Nielsen\Dropbox\4. Semester\I4DAB1\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Henrik Nielsen\Dropbox\4. Semester\I4DAB1\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.dll
+C:\Users\Henrik Nielsen\Dropbox\4. Semester\I4DAB1\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.pdb

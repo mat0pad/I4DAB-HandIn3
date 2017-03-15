@@ -36,8 +36,7 @@ namespace DatabaseAccessLibrary
             finally
             {
                 // Close connection
-                if (conn != null)
-                    conn.Close();
+                    conn?.Close();
             }
             return count;
         }
@@ -65,12 +64,8 @@ namespace DatabaseAccessLibrary
             finally
             {
                 // Close connection
-                if (rdr != null)
-                    rdr.Close();
-
-
-                if (conn != null)
-                    conn.Close();
+                    rdr?.Close();
+                    conn?.Close();
             }
         }
 
@@ -105,12 +100,8 @@ namespace DatabaseAccessLibrary
             finally
             {
                 // Close connection
-                if (rdr != null)
-                    rdr.Close();
-
-
-                if (conn != null)
-                    conn.Close();
+                    rdr?.Close();
+                    conn?.Close();
             }
 
             return list;
@@ -144,12 +135,8 @@ namespace DatabaseAccessLibrary
             finally
             {
                 // Close connection
-                if (rdr != null)
-                    rdr.Close();
-
-
-                if (conn != null)
-                    conn.Close();
+                    rdr?.Close();
+                    conn?.Close();
             }
 
             return pm;
