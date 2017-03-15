@@ -16,7 +16,7 @@ namespace I4DAB_HandIn3
 
             Console.WriteLine("There are {0} persons in db", db.GetNumberOfRecords());
 
-            var list = db.GetTelefons(7, true);
+            var list = db.GetTelefons(7);
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -25,6 +25,11 @@ namespace I4DAB_HandIn3
 
             Console.WriteLine("Home number is " + db.GetHomeTelefon(7).Nummer);
 
+            PersonModel person = db.GetPerson(1);
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("Person information for person with Id = 1:");
+            Console.WriteLine("AdresseId: " + person.AdresseId + ". Efternavn: " + person.Efternavn + ". Fornavn: " + person.Fornavn + ". Mellemnavn: " + person.Mellemnavn + ". PersonId: " + person.PersonId + ". Type: " + person.Type);
+            Console.WriteLine("----------------------------------------");
         }
     }
 }

@@ -108,6 +108,41 @@ namespace DatabaseAccessLibrary
         }
 
 
+        public TelefonModel GetHomeTelefon(int personId)
+        {
+            SqlDataReader rdr = null;
+            TelefonModel phone;
+            try
+            {
+                // Open connection
+                conn.Open();
+
+                string cmdString = "select * from TelefonNr where (PersonId = #personId) AND (Type = 'Hjem')";
+
+                // Instantiate a new command
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
+
+                // Send command
+                rdr = cmd.ExecuteReader();
+
+                rdr.Read();
+                    phone = new TelefonModel(
+                    Convert.ToInt32(rdr["TelefonId"]),
+                    rdr["Type"].ToString(),
+                    rdr["Nummer"].ToString(),
+                   Convert.ToInt32(rdr["PersonId"]));
+            }
+           finally
+            {
+                // Close connection
+                    rdr?.Close();
+                    conn?.Close();
+            }
+
+            return phone;
+        }
+
+
 
         public PersonModel GetPerson(int personId)
         {
@@ -129,7 +164,12 @@ namespace DatabaseAccessLibrary
 
                 rdr.Read();
 
-                pm = new PersonModel(personId, (string)rdr["Fornavn"], (string)rdr["Mellemnavn"], (string)rdr["Efternavn"], (string)rdr["Type"], (int)rdr["AdresseId"]);
+                pm = new PersonModel(personId, 
+                    (string)rdr["Fornavn"], 
+                    (string)rdr["Mellemnavn"], 
+                    (string)rdr["Efternavn"], 
+                    (string)rdr["Type"],
+                    Convert.ToInt32(rdr["AdresseId"]));
 
             }
             finally
