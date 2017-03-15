@@ -62,7 +62,7 @@ namespace DatabaseAccessLibrary
         public string Bynavn { get; set; }
         public string Type { get; set; }
 
-        public AdresseModel(int adresseId, string vej, string by, int husnr, int postnr, string type)
+        public AdresseModel(int adresseId,string vej, int husnr, int postnr, string by, string type)
         {
             AdresseId = adresseId;
             Vejnavn = vej;
@@ -72,6 +72,11 @@ namespace DatabaseAccessLibrary
             PostNummer = postnr;
         }
 
+        public override string ToString()
+        {
+            return "adresseId : " + AdresseId.ToString() + " Vej : " + Vejnavn + " husnr : " + HusNummer.ToString() + " postnr : " +
+                   PostNummer.ToString() + " by : " + Bynavn + " Type : " + Type;
+        }
     }
 
     public class HarAdresseModel

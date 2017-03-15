@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -189,6 +190,7 @@ namespace DatabaseAccessLibrary
                     (string)rdr["Type"],
                     Convert.ToInt32(rdr["AdresseId"]));
 
+
             }
             finally
             {
@@ -198,6 +200,73 @@ namespace DatabaseAccessLibrary
             }
 
             return pm;
+        }
+
+        public AdresseModel getAdresse(int addressId)
+        {
+            SqlDataReader sqlDataReader = null;
+            AdresseModel adresseModel = null;
+
+            try
+            {
+                string command = "select * from Adresse where AdresseId = #adresseId";
+                SqlCommand cmd = new SqlCommand(command.Replace("#adresseId",addressId.ToString()),conn);
+                conn.Open();
+                sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                {
+                    adresseModel = new AdresseModel(
+                        Convert.ToInt32(sqlDataReader["AdresseId"]),
+                        sqlDataReader["Vejnavn"].ToString(),
+                        Convert.ToInt32(sqlDataReader["HusNr"]),
+                        Convert.ToInt32(sqlDataReader["PostNr"]),
+                        sqlDataReader["Bynavn"].ToString(),
+                        sqlDataReader["Type"].ToString());
+
+                }
+            }
+            finally 
+            {
+                if (sqlDataReader != null)
+                    sqlDataReader.Close();
+                if (conn != null)
+                    conn.Close();
+            }
+            return adresseModel;
+        }
+
+        public List<AdresseModel> GetAdresses()
+        {
+            SqlDataReader sqlDataReader = null;
+            List<AdresseModel> list = new List<AdresseModel>();
+            try
+            {
+              
+                SqlCommand cmd = new SqlCommand("select * from Adresse", conn);
+                conn.Open();
+                sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                {
+                    AdresseModel adresse = new AdresseModel(
+                        Convert.ToInt32(sqlDataReader["AdresseId"]),
+                        sqlDataReader["Vejnavn"].ToString(),
+                        Convert.ToInt32(sqlDataReader["HusNr"]),
+                        Convert.ToInt32(sqlDataReader["PostNr"]),
+                        sqlDataReader["Bynavn"].ToString(),
+                        sqlDataReader["Type"].ToString());
+
+                    list.Add(adresse);
+                }
+            }
+            finally
+            {
+                if(sqlDataReader != null)
+                    sqlDataReader.Close();
+                if(conn != null)
+                    conn.Close();
+            }
+            return list;
+
         }
     }
 }
