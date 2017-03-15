@@ -91,6 +91,25 @@ namespace DatabaseAccessLibrary
             return list;
         }
 
+        public void SetName(string name, int personId)
+        {
+
+            try
+            {
+                conn.Open();
+                string cmdString = "UPDATE Person SET Name = #name WHERE PersonId = #personId";
+                cmdString = cmdString.Replace("#name", name);
+                SqlCommand sqlCommand = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
+                sqlCommand.ExecuteNonQuery();
+                sqlCommand.Dispose();
+
+            }
+            finally 
+            {
+                conn?.Close();
+            }
+        }
+
         public List<TelefonModel> GetTelefons(int personId)
         {
             SqlDataReader rdr = null;

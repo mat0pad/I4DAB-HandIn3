@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DatabaseAccessLibrary
 {
+
 
     public class PersonModel
     {
@@ -31,7 +33,10 @@ namespace DatabaseAccessLibrary
             return "AdresseId: " + AdresseId + ". Efternavn: " + Efternavn + ". Fornavn: " + Fornavn + ". Mellemnavn: " + Mellemnavn + ". PersonId: " + PersonId + ". Type: " + Type;
         }
 
-         
+        public void Update(string set, string where)
+        {
+
+        }
     }
     public class TelefonModel
     {
