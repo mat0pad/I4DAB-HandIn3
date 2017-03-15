@@ -49,6 +49,13 @@ namespace DatabaseAccessLibrary
             return count;
         }
 
+        public PersonJoin GetAllRecordsForPerson(int personId)
+        {
+            var personJoin = new PersonJoin(GetPerson(personId), GetAllAdressesForPerson(personId), GetTelefons(personId));
+             
+            return personJoin;
+        }
+
         public List<PersonModel> GetPersons(bool sortAsc = true)
         {
             SqlDataReader rdr = null;
@@ -91,78 +98,6 @@ namespace DatabaseAccessLibrary
             return list;
         }
 
-        public List<TelefonModel> GetTelefons(int personId)
-        {
-            SqlDataReader rdr = null;
-            List<TelefonModel> list = new List<TelefonModel>();
-            try
-            {
-                // Open connection
-                conn.Open();
-
-                string cmdString = "select * from TelefonNr where (PersonId = #personId)";
-
-                // Instantiate a new command
-                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
-
-                // Send command
-                rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    TelefonModel phone = new TelefonModel(
-                    Convert.ToInt32(rdr["TelefonId"]), 
-                    rdr["Type"].ToString(), 
-                    rdr["Nummer"].ToString(),
-                   Convert.ToInt32(rdr["PersonId"]));
-                    
-                    list.Add(phone);
-                }
-            }
-            finally
-            {
-                // Close connection
-                    rdr?.Close();
-                    conn?.Close();
-            }
-
-            return list;
-        }
-
-        public TelefonModel GetHomeTelefon(int personId)
-        {
-            SqlDataReader rdr = null;
-            TelefonModel phone;
-            try
-            {
-                // Open connection
-                conn.Open();
-
-                string cmdString = "select * from TelefonNr where (PersonId = #personId) AND (Type = 'Hjem')";
-
-                // Instantiate a new command
-                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
-
-                // Send command
-                rdr = cmd.ExecuteReader();
-
-                rdr.Read();
-                    phone = new TelefonModel(
-                    Convert.ToInt32(rdr["TelefonId"]),
-                    rdr["Type"].ToString(),
-                    rdr["Nummer"].ToString(),
-                   Convert.ToInt32(rdr["PersonId"]));
-            }
-           finally
-            {
-                // Close connection
-                    rdr?.Close();
-                    conn?.Close();
-            }
-
-            return phone;
-        }
-
         public PersonModel GetPerson(int personId)
         {
             SqlDataReader rdr = null;
@@ -202,7 +137,7 @@ namespace DatabaseAccessLibrary
             return pm;
         }
 
-        public AdresseModel getAdresse(int addressId)
+        public AdresseModel GetHomeAdresse(int addressId)
         {
             SqlDataReader sqlDataReader = null;
             AdresseModel adresseModel = null;
@@ -233,6 +168,39 @@ namespace DatabaseAccessLibrary
                     conn.Close();
             }
             return adresseModel;
+        }
+
+        public List<AdresseModel> GetAllAdressesForPerson(int personId)
+        {
+            SqlDataReader rdr = null;
+            List<AdresseModel> list = new List<AdresseModel>();
+            try
+            {
+                string cmdString = "select * from HarAdresse where (PersonId = #personId)";
+
+
+                cmdString = cmdString.Replace("#personId", personId.ToString());
+
+                SqlCommand cmd = new SqlCommand(cmdString, conn);
+
+                conn.Open();
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    AdresseModel adresse = GetHomeAdresse(Convert.ToInt32(rdr["AdresseId"]));
+
+                    list.Add(adresse);
+                }
+            }
+            finally
+            {
+                if (rdr != null)
+                    rdr.Close();
+                if (conn != null)
+                    conn.Close();
+            }
+            return list;
+
         }
 
         public List<AdresseModel> GetAdresses()
@@ -267,6 +235,78 @@ namespace DatabaseAccessLibrary
             }
             return list;
 
+        }
+
+        public List<TelefonModel> GetTelefons(int personId)
+        {
+            SqlDataReader rdr = null;
+            List<TelefonModel> list = new List<TelefonModel>();
+            try
+            {
+                // Open connection
+                conn.Open();
+
+                string cmdString = "select * from TelefonNr where (PersonId = #personId)";
+
+                // Instantiate a new command
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
+
+                // Send command
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    TelefonModel phone = new TelefonModel(
+                    Convert.ToInt32(rdr["TelefonId"]),
+                    rdr["Type"].ToString(),
+                    rdr["Nummer"].ToString(),
+                   Convert.ToInt32(rdr["PersonId"]));
+
+                    list.Add(phone);
+                }
+            }
+            finally
+            {
+                // Close connection
+                rdr?.Close();
+                conn?.Close();
+            }
+
+            return list;
+        }
+
+        public TelefonModel GetHomeTelefon(int personId)
+        {
+            SqlDataReader rdr = null;
+            TelefonModel phone;
+            try
+            {
+                // Open connection
+                conn.Open();
+
+                string cmdString = "select * from TelefonNr where (PersonId = #personId) AND (Type = 'Hjem')";
+
+                // Instantiate a new command
+                SqlCommand cmd = new SqlCommand(cmdString.Replace("#personId", personId.ToString()), conn);
+
+                // Send command
+                rdr = cmd.ExecuteReader();
+
+                rdr.Read();
+                phone = new TelefonModel(
+                Convert.ToInt32(rdr["TelefonId"]),
+                rdr["Type"].ToString(),
+                rdr["Nummer"].ToString(),
+               Convert.ToInt32(rdr["PersonId"]));
+            }
+            finally
+            {
+                // Close connection
+                rdr?.Close();
+                conn?.Close();
+            }
+
+            return phone;
         }
     }
 }
