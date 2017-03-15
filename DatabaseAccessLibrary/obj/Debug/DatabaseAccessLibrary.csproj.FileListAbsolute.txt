@@ -1,5 +1,0 @@
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\bin\Debug\DatabaseAccessLibrary.dll
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\bin\Debug\DatabaseAccessLibrary.pdb
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.csprojResolveAssemblyReference.cache
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.dll
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\DatabaseAccessLibrary\obj\Debug\DatabaseAccessLibrary.pdb

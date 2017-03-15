@@ -74,12 +74,12 @@ namespace DatabaseAccessLibrary
         }
     }
 
-    class PersonJoin
+    public class PersonJoin
     {
         private PersonModel person;
         private AdresseModel adresse;
         private TelefonModel telefon;
-        void PesonJoin(PersonModel p, AdresseModel a, TelefonModel t)
+        public PersonJoin(PersonModel p, AdresseModel a, TelefonModel t)
         {
             this.person = p;
             this.telefon = t;
@@ -88,30 +88,14 @@ namespace DatabaseAccessLibrary
 
     }
 
-
     public class KartotekModel
     {
-        private List<PersonModel> PersonerFelt;
-        private List<TelefonModel> TelefonerFelt;
-        private List<AdresseModel> AdresserFelt;
-        private List<PersonJoin> SamletFelt;
+        public List<PersonJoin> SamletFelt { get; set; }
 
-        internal protected int x; //Access modfiers are "Or'ed"
-
-        public List<PersonModel> MyProperty { get; set; }
-        public List<TelefonModel> Telefoner
+        public KartotekModel(List<PersonJoin> all)
         {
-            get { return TelefonerFelt; }
-            set { TelefonerFelt = value; }
+            SamletFelt = all;
         }
-
-
-        public List<PersonModel> Personer
-        {
-            get { return PersonerFelt; }
-            set { PersonerFelt = value; }
-        }
-
 
     }
 
