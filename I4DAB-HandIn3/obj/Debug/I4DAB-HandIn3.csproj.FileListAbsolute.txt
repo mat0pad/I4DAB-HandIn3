@@ -1,8 +1,0 @@
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\bin\Debug\I4DAB-HandIn3.exe.config
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\bin\Debug\I4DAB-HandIn3.exe
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\bin\Debug\I4DAB-HandIn3.pdb
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\obj\Debug\I4DAB-HandIn3.exe
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\obj\Debug\I4DAB-HandIn3.pdb
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\bin\Debug\DatabaseAccessLibrary.dll
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\bin\Debug\DatabaseAccessLibrary.pdb
-C:\Users\Mathias\documents\visual studio 2015\Projects\I4DAB-HandIn3\I4DAB-HandIn3\obj\Debug\I4DAB-HandIn3.csprojResolveAssemblyReference.cache
