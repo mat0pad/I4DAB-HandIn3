@@ -137,10 +137,10 @@ namespace DatabaseAccessLibrary
                 rdr.Read();
 
                 pm = new PersonModel(personId, 
-                    (string)rdr["Fornavn"], 
-                     rdr["Mellemnavn"].ToString(), 
-                    (string)rdr["Efternavn"], 
-                    (string)rdr["Type"],
+                    rdr["Fornavn"].ToString(), 
+                    rdr["Mellemnavn"].ToString(), 
+                    rdr["Efternavn"].ToString(), 
+                    rdr["Type"].ToString(),
                     Convert.ToInt32(rdr["AdresseId"]));
 
 
