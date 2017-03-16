@@ -125,21 +125,22 @@ namespace DatabaseAccessLibrary
 
                 list = GetAllAdressesForPerson(personId);
                 SqlCommand sqlCommand = null;
+                sqlCommand = new SqlCommand("DELETE FROM Person WHERE PersonId = " + personId, conn);
+                conn.Open();
+                sqlCommand.ExecuteNonQuery();
                 foreach (var item in list)
                 {
                     sqlCommand =
-                        new SqlCommand("SELECT * From HarAdresse,Person Where HarAdresse.AdresseId = " + item.AdresseId,conn);
-                    conn.Open();
-                    if (sqlCommand.ExecuteNonQuery() == 1)
+                        new SqlCommand("SELECT count(*) From HarAdresse Where HarAdresse.AdresseId = '" + item.AdresseId+"'",conn);
+                    if ( (int)sqlCommand.ExecuteScalar() == 0)
                     {
                         SqlCommand sqlDeleteCommand =
-                            new SqlCommand("DELETE FROM Adresse WHERE AdresseId = '" + item.AdresseId + "'",conn);
+                            new SqlCommand("DELETE FROM Adresse WHERE AdresseId = "+item.AdresseId, conn);
                         sqlDeleteCommand.ExecuteNonQuery();
 
                     }
                 }
-                sqlCommand = new SqlCommand("DELETE FROM Person WHERE PersonId = " + personId, conn);
-                sqlCommand.ExecuteNonQuery();
+
 
             }
             finally
