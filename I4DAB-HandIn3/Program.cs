@@ -56,13 +56,15 @@ namespace I4DAB_HandIn3
                 Console.WriteLine("-----------------");
             }
             */
-
+            /*
            var personOLd = db.GetPerson(2);
            Console.WriteLine(personOLd.ToString());
            db.SetName("Anton", 2);
            var personNew = db.GetPerson(2);
            Console.WriteLine(personNew.ToString());
-            
+            */
+            //db.GetAllAdressesForPerson(1);
+            db.DeletePerson(1);
         }
     }
 }

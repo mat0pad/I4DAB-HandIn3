@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,6 +117,38 @@ namespace DatabaseAccessLibrary
             }
         }
 
+        public void DeletePerson(int personId )
+        {
+            List<AdresseModel> list;
+            try
+            {
+
+                list = GetAllAdressesForPerson(personId);
+                SqlCommand sqlCommand = null;
+                foreach (var item in list)
+                {
+                    sqlCommand =
+                        new SqlCommand("SELECT * From HarAdresse,Person Where HarAdresse.AdresseId = " + item.AdresseId,conn);
+                    conn.Open();
+                    if (sqlCommand.ExecuteNonQuery() == 1)
+                    {
+                        SqlCommand sqlDeleteCommand =
+                            new SqlCommand("DELETE FROM Adresse WHERE AdresseId = '" + item.AdresseId + "'",conn);
+                        sqlDeleteCommand.ExecuteNonQuery();
+
+                    }
+                }
+                sqlCommand = new SqlCommand("DELETE FROM Person WHERE PersonId = " + personId, conn);
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            finally
+            { 
+                conn?.Close();
+            }
+
+        }
+
         public PersonModel GetPerson(int personId)
         {
             SqlDataReader rdr = null;
@@ -192,6 +225,7 @@ namespace DatabaseAccessLibrary
         {
             SqlDataReader rdr = null;
             List<AdresseModel> list = new List<AdresseModel>();
+            SqlConnection secondConn = new SqlConnection(conn.ConnectionString); //nød til at have en ekstra, da conn bliver åbnet i getHomeAdress
             try
             {
                 string cmdString = "select * from HarAdresse where (PersonId = #personId)";
@@ -199,9 +233,9 @@ namespace DatabaseAccessLibrary
 
                 cmdString = cmdString.Replace("#personId", personId.ToString());
 
-                SqlCommand cmd = new SqlCommand(cmdString, conn);
+                SqlCommand cmd = new SqlCommand(cmdString, secondConn);
 
-                conn.Open();
+                secondConn.Open();
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
@@ -216,6 +250,8 @@ namespace DatabaseAccessLibrary
                     rdr.Close();
                 if (conn != null)
                     conn.Close();
+                if(secondConn != null)
+                    secondConn.Close();
             }
             return list;
 
