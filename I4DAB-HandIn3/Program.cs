@@ -37,6 +37,7 @@ namespace I4DAB_HandIn3
             }*/
 
 
+            /*
             var personAllData = db.GetAllRecordsForPerson(1);
 
             Console.WriteLine(personAllData.person.ToString());
@@ -54,7 +55,14 @@ namespace I4DAB_HandIn3
                 Console.WriteLine(item.ToString());
                 Console.WriteLine("-----------------");
             }
+            */
 
+           var personOLd = db.GetPerson(2);
+           Console.WriteLine(personOLd.ToString());
+           db.SetName("Anton", 2);
+           var personNew = db.GetPerson(2);
+           Console.WriteLine(personNew.ToString());
+            
         }
     }
 }
