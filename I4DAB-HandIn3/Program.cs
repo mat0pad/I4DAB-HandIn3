@@ -64,7 +64,8 @@ namespace I4DAB_HandIn3
            Console.WriteLine(personNew.ToString());
             */
             //db.GetAllAdressesForPerson(1);
-            db.DeletePerson(3);
+           // db.DeletePerson(3);
+            db.InsertPerson(11, "hej", "hej","", "test", 2);
         }
     }
 }

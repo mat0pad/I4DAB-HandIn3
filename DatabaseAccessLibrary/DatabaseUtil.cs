@@ -148,6 +148,36 @@ namespace DatabaseAccessLibrary
                 conn?.Close();
             }
 
+       }
+
+        public int InsertPerson(int personId, string navn,string efternavn, string mellemnavn,string type,int AdresseId)
+        {
+            SqlDataReader rdr = null;
+            string comRoot;
+            if (mellemnavn.Length == 0)
+            {
+                comRoot = "INSERT INTO Person(PersonId,Fornavn,Efternavn,Type,AdresseId) VALUES ";
+                comRoot += "(" + personId + ",'" + navn + "','" + efternavn + "','" + type + "'," + AdresseId + ")";
+            }
+            else
+            {
+                comRoot = "INSERT INTO Person(PersonId,Fornavn,Efternavn,Mellemnavn,Type,AdresseId) VALUES ";
+                comRoot += "(" + personId + ",'" + navn + "','" + efternavn + "','"+mellemnavn+"','" + type + "'," + AdresseId + ")";
+            }
+
+            try
+            {
+                SqlCommand sqc = null;
+                sqc = new SqlCommand(comRoot, conn); 
+                conn.Open();
+                return sqc.ExecuteNonQuery();
+
+            }
+            finally
+            {
+                conn?.Close();
+                
+            }
         }
 
         public PersonModel GetPerson(int personId)
