@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,14 +99,14 @@ namespace DatabaseAccessLibrary
             return list;
         }
 
-        public int SetPersonName(string name, int personId)
+        public int SetPersonName(string fornavn, int personId)
         {
 
             try
             {
                 conn.Open();
                 string cmdString = "UPDATE Person SET Fornavn='#name' WHERE PersonId='#personId'";
-                cmdString = cmdString.Replace("#name", name);
+                cmdString = cmdString.Replace("#name", fornavn);
                 SqlCommand sqlCommand = new SqlCommand(cmdString.Replace("#personId",personId.ToString()), conn);
                 return sqlCommand.ExecuteNonQuery();
 
@@ -113,6 +114,69 @@ namespace DatabaseAccessLibrary
             finally 
             {
                 conn?.Close();
+            }
+        }
+
+        public void DeletePerson(int personId )
+        {
+            List<AdresseModel> list;
+            try
+            {
+
+                list = GetAllAdressesForPerson(personId);
+                SqlCommand sqlCommand = null;
+                sqlCommand = new SqlCommand("DELETE FROM Person WHERE PersonId = " + personId, conn);
+                conn.Open();
+                sqlCommand.ExecuteNonQuery();
+                foreach (var item in list)
+                {
+                    sqlCommand =
+                        new SqlCommand("SELECT count(*) From HarAdresse Where HarAdresse.AdresseId = '" + item.AdresseId+"'",conn);
+                    if ( (int)sqlCommand.ExecuteScalar() == 0)
+                    {
+                        SqlCommand sqlDeleteCommand =
+                            new SqlCommand("DELETE FROM Adresse WHERE AdresseId = "+item.AdresseId, conn);
+                        sqlDeleteCommand.ExecuteNonQuery();
+
+                    }
+                }
+
+
+            }
+            finally
+            { 
+                conn?.Close();
+            }
+
+       }
+
+        public int InsertPerson(int personId, string navn,string efternavn, string mellemnavn,string type,int AdresseId)
+        {
+            SqlDataReader rdr = null;
+            string comRoot;
+            if (mellemnavn.Length == 0)
+            {
+                comRoot = "INSERT INTO Person(PersonId,Fornavn,Efternavn,Type,AdresseId) VALUES ";
+                comRoot += "(" + personId + ",'" + navn + "','" + efternavn + "','" + type + "'," + AdresseId + ")";
+            }
+            else
+            {
+                comRoot = "INSERT INTO Person(PersonId,Fornavn,Efternavn,Mellemnavn,Type,AdresseId) VALUES ";
+                comRoot += "(" + personId + ",'" + navn + "','" + efternavn + "','"+mellemnavn+"','" + type + "'," + AdresseId + ")";
+            }
+
+            try
+            {
+                SqlCommand sqc = null;
+                sqc = new SqlCommand(comRoot, conn); 
+                conn.Open();
+                return sqc.ExecuteNonQuery();
+
+            }
+            finally
+            {
+                conn?.Close();
+                
             }
         }
 
@@ -137,10 +201,10 @@ namespace DatabaseAccessLibrary
                 rdr.Read();
 
                 pm = new PersonModel(personId, 
-                    (string)rdr["Fornavn"], 
-                     rdr["Mellemnavn"].ToString(), 
-                    (string)rdr["Efternavn"], 
-                    (string)rdr["Type"],
+                    rdr["Fornavn"].ToString(), 
+                    rdr["Mellemnavn"].ToString(), 
+                    rdr["Efternavn"].ToString(), 
+                    rdr["Type"].ToString(),
                     Convert.ToInt32(rdr["AdresseId"]));
 
 
@@ -192,6 +256,7 @@ namespace DatabaseAccessLibrary
         {
             SqlDataReader rdr = null;
             List<AdresseModel> list = new List<AdresseModel>();
+            SqlConnection secondConn = new SqlConnection(conn.ConnectionString); //nød til at have en ekstra, da conn bliver åbnet i getHomeAdress
             try
             {
                 string cmdString = "select * from HarAdresse where (PersonId = #personId)";
@@ -199,9 +264,9 @@ namespace DatabaseAccessLibrary
 
                 cmdString = cmdString.Replace("#personId", personId.ToString());
 
-                SqlCommand cmd = new SqlCommand(cmdString, conn);
+                SqlCommand cmd = new SqlCommand(cmdString, secondConn);
 
-                conn.Open();
+                secondConn.Open();
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
@@ -216,6 +281,8 @@ namespace DatabaseAccessLibrary
                     rdr.Close();
                 if (conn != null)
                     conn.Close();
+                if(secondConn != null)
+                    secondConn.Close();
             }
             return list;
 

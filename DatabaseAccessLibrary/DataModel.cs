@@ -32,11 +32,6 @@ namespace DatabaseAccessLibrary
         {
             return "AdresseId: " + AdresseId + ". Efternavn: " + Efternavn + ". Fornavn: " + Fornavn + ". Mellemnavn: " + Mellemnavn + ". PersonId: " + PersonId + ". Type: " + Type;
         }
-
-        public void Update(string set, string where)
-        {
-
-        }
     }
     public class TelefonModel
     {
@@ -79,8 +74,8 @@ namespace DatabaseAccessLibrary
 
         public override string ToString()
         {
-            return "adresseId : " + AdresseId.ToString() + " Vej : " + Vejnavn + " husnr : " + HusNummer.ToString() + " postnr : " +
-                   PostNummer.ToString() + " by : " + Bynavn + " Type : " + Type;
+            return "adresseId : " + AdresseId + " Vej : " + Vejnavn + " husnr : " + HusNummer + " postnr : " +
+                   PostNummer + " by : " + Bynavn + " Type : " + Type;
         }
     }
 
