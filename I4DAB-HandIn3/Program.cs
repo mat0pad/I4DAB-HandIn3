@@ -59,7 +59,7 @@ namespace I4DAB_HandIn3
 
            var personOLd = db.GetPerson(2);
            Console.WriteLine(personOLd.ToString());
-           db.SetName("Anton", 2);
+           db.SetPersonName("Anton", 2);
            var personNew = db.GetPerson(2);
            Console.WriteLine(personNew.ToString());
             

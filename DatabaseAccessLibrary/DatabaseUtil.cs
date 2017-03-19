@@ -98,7 +98,7 @@ namespace DatabaseAccessLibrary
             return list;
         }
 
-        public int SetName(string name, int personId)
+        public int SetPersonName(string name, int personId)
         {
 
             try
